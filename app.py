@@ -119,7 +119,7 @@ col3.metric("Θερμοκρασία", f"{row['temp']}°C")
 # ======================
 # MAP
 # ======================
-st.map(pd.DataFrame({"lat":[row["lat"]],"lon":[row["lon"]]}))
+st.map(pd.DataFrame({"lat": [row["lat"]], "lon": [row["lon"]]}))
 
 # ======================
 # QR
@@ -127,10 +127,11 @@ st.map(pd.DataFrame({"lat":[row["lat"]],"lon":[row["lon"]]}))
 link = f"{BASE_URL}/?batch={row['batch_number']}"
 qr_img = generate_qr(link)
 
-st.image(qr_img, use_container_width=True)
-
 buf = io.BytesIO()
 qr_img.save(buf, format="PNG")
+buf.seek(0)
+
+st.image(buf.getvalue(), use_container_width=True)
 
 st.download_button(
     "Κατέβασε QR",
